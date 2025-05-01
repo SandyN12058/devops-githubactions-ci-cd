@@ -1,5 +1,6 @@
 # frontend/Dockerfile
 
+# Stage 1: Build React App
 # Use the official Node.js image
 FROM node:18 as build
 
@@ -10,7 +11,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Copy the rest of the application code
 COPY . .
@@ -18,14 +19,18 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Use a lightweight server to serve the build
+
+# Stage 2: Serve with Nginx
 FROM nginx:alpine
 
 # Copy the build files to Nginx
 COPY --from=build /app/build /usr/share/nginx/html
 
+# Copy custom Nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Expose the Nginx port
-EXPOSE 3000
+EXPOSE 80
 
 # Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
