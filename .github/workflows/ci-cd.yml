@@ -39,8 +39,6 @@ jobs:
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/${{ env.BACKEND_IMAGE }}:latest
             ${{ secrets.DOCKER_USERNAME }}/${{ env.BACKEND_IMAGE }}:v${{ github.run_number }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
 
       - name: Build and push frontend Docker image
         uses: docker/build-push-action@v5
@@ -52,8 +50,6 @@ jobs:
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/${{ env.FRONTEND_IMAGE }}:latest
             ${{ secrets.DOCKER_USERNAME }}/${{ env.FRONTEND_IMAGE }}:v${{ github.run_number }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
 
   deploy:
     runs-on: ubuntu-latest
