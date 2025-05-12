@@ -64,6 +64,10 @@ jobs:
           fingerprint: ${{ secrets.EC2_SSH_FINGERPRINT }}
           script: |
             echo "Deploying to AWS EC2 ..."
+            
+            # Disable strict host checking to prevent issues with host verification
+            mkdir -p ~/.ssh
+            echo -e "Host *\n\tStrictHostKeyChecking no\n\n" >> ~/.ssh/config
 
             # Starting directory
             cd /home/ubuntu
