@@ -62,6 +62,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           fingerprint: ${{ secrets.EC2_SSH_FINGERPRINT }}
+          strict: false
           script: |
             echo "Deploying to AWS EC2 ..."
 
